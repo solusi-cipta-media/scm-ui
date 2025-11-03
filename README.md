@@ -108,6 +108,96 @@ A versatile button component with multiple variants and sizes.
 <Button className="w-full">Full Width</Button>
 ```
 
+### Datatable
+
+A powerful server-side data table component with pagination, sorting, and search functionality powered by React Query.
+
+> **Note:** This component requires additional setup. See [Datatable README](./src/components/Datatable/README.md) for detailed instructions.
+
+**Required Dependencies:**
+- `@tanstack/react-query` (^5.0.0) - Already a peer dependency
+- shadcn/ui components: `table`, `button`, `input`, `select`
+
+**Quick Setup:**
+
+```bash
+# Install React Query
+npm install @tanstack/react-query
+
+# Install required shadcn/ui components
+npx shadcn@latest add table button input select
+```
+
+**Example:**
+
+```tsx
+'use client'
+
+import { Datatable, Column } from 'scm-ui'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
+interface User {
+  id: string
+  name: string
+  email: string
+}
+
+const columns: Column<User>[] = [
+  { key: 'name', label: 'Name', sortable: true },
+  { key: 'email', label: 'Email', sortable: true },
+]
+
+async function fetchUsers(params: any) {
+  const res = await fetch(`/api/users?${new URLSearchParams(params)}`)
+  return res.json()
+}
+
+export default function UsersPage() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Datatable
+        fetchAction={fetchUsers}
+        columns={columns}
+        queryKey="users"
+        searchPlaceholder="Search users..."
+      />
+    </QueryClientProvider>
+  )
+}
+```
+
+**Features:**
+- ✅ Server-side pagination
+- ✅ Server-side sorting
+- ✅ Debounced search
+- ✅ Loading & error states
+- ✅ React Query integration
+- ✅ Imperative refresh via ref
+
+For complete documentation and server action examples, see the [Datatable README](./src/components/Datatable/README.md).
+
+### useDebounce Hook
+
+A custom React hook to debounce values (useful for search inputs).
+
+```tsx
+import { useDebounce } from 'scm-ui'
+
+function SearchComponent() {
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, 500) // 500ms delay
+
+  useEffect(() => {
+    // This will only run 500ms after user stops typing
+    console.log('Searching for:', debouncedSearch)
+  }, [debouncedSearch])
+
+  return <input value={search} onChange={(e) => setSearch(e.target.value)} />
+}
+```
+
 ## Development
 
 ### Prerequisites

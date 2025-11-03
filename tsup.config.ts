@@ -10,7 +10,17 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom', 'next'],
+  external: [
+    'react',
+    'react-dom',
+    'next',
+    '@tanstack/react-query',
+    // Mark UI components as external (to be provided by consuming project)
+    '@/components/ui/table',
+    '@/components/ui/button',
+    '@/components/ui/input',
+    '@/components/ui/select',
+  ],
   treeshake: true,
   minify: false,
   // Inject CSS into the bundle
