@@ -1,22 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Datatable, Column } from './Datatable'
-import { useRef } from 'react'
+import type { Meta, StoryObj } from "@storybook/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useRef } from "react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Column, DataTable } from "./DataTable";
 
 // Mock data types
 interface User {
-  id: string
-  name: string
-  email: string
-  role: string
-  status: 'active' | 'inactive'
-  createdAt: string
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: "active" | "inactive";
+  createdAt: string;
 }
 
 // Generate mock users
 const generateMockUsers = (count: number): User[] => {
-  const roles = ['Admin', 'User', 'Manager', 'Guest']
-  const statuses: ('active' | 'inactive')[] = ['active', 'inactive']
+  const roles = ["Admin", "User", "Manager", "Guest"];
+  const statuses: ("active" | "inactive")[] = ["active", "inactive"];
 
   return Array.from({ length: count }, (_, i) => ({
     id: `user-${i + 1}`,
@@ -25,48 +26,48 @@ const generateMockUsers = (count: number): User[] => {
     role: roles[i % roles.length],
     status: statuses[i % 2],
     createdAt: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
-  }))
-}
+  }));
+};
 
-const allMockUsers = generateMockUsers(100)
+const allMockUsers = generateMockUsers(100);
 
 // Mock fetch function
 const mockFetchUsers = async (params: {
-  page: number
-  pageSize: number
-  search: string
-  sortBy: string
-  sortOrder: 'asc' | 'desc'
+  page: number;
+  pageSize: number;
+  search: string;
+  sortBy: string;
+  sortOrder: "asc" | "desc";
 }) => {
   // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 500))
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
   // Filter by search
-  let filteredUsers = allMockUsers
+  let filteredUsers = allMockUsers;
   if (params.search) {
-    const searchLower = params.search.toLowerCase()
+    const searchLower = params.search.toLowerCase();
     filteredUsers = allMockUsers.filter(
       (user) =>
         user.name.toLowerCase().includes(searchLower) ||
         user.email.toLowerCase().includes(searchLower) ||
         user.role.toLowerCase().includes(searchLower)
-    )
+    );
   }
 
   // Sort
   const sortedUsers = [...filteredUsers].sort((a, b) => {
-    const aVal = a[params.sortBy as keyof User]
-    const bVal = b[params.sortBy as keyof User]
+    const aVal = a[params.sortBy as keyof User];
+    const bVal = b[params.sortBy as keyof User];
 
-    if (aVal < bVal) return params.sortOrder === 'asc' ? -1 : 1
-    if (aVal > bVal) return params.sortOrder === 'asc' ? 1 : -1
-    return 0
-  })
+    if (aVal < bVal) return params.sortOrder === "asc" ? -1 : 1;
+    if (aVal > bVal) return params.sortOrder === "asc" ? 1 : -1;
+    return 0;
+  });
 
   // Paginate
-  const start = (params.page - 1) * params.pageSize
-  const end = start + params.pageSize
-  const paginatedUsers = sortedUsers.slice(start, end)
+  const start = (params.page - 1) * params.pageSize;
+  const end = start + params.pageSize;
+  const paginatedUsers = sortedUsers.slice(start, end);
 
   return {
     success: true,
@@ -77,18 +78,12 @@ const mockFetchUsers = async (params: {
       total: filteredUsers.length,
       totalPages: Math.ceil(filteredUsers.length / params.pageSize),
     },
-  }
-}
-
-// Mock fetch with error
-const mockFetchUsersError = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 500))
-  throw new Error('Failed to fetch users')
-}
+  };
+};
 
 // Mock fetch with no data
 const mockFetchUsersEmpty = async (params: any) => {
-  await new Promise((resolve) => setTimeout(resolve, 500))
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return {
     success: true,
     data: [],
@@ -98,54 +93,104 @@ const mockFetchUsersEmpty = async (params: any) => {
       total: 0,
       totalPages: 0,
     },
-  }
-}
+  };
+};
 
 // Column definitions
-const columns: Column<User>[] = [
+const columns: Column[] = [
   {
-    key: 'name',
-    label: 'Name',
+    key: "name",
+    label: "Name",
     sortable: true,
   },
   {
-    key: 'email',
-    label: 'Email',
+    key: "email",
+    label: "Email",
     sortable: true,
   },
   {
-    key: 'role',
-    label: 'Role',
+    key: "role",
+    label: "Role",
     sortable: true,
-    render: (user) => (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-        {user.role}
-      </span>
-    ),
   },
   {
-    key: 'status',
-    label: 'Status',
+    key: "status",
+    label: "Status",
     sortable: true,
-    render: (user) => (
-      <span
-        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-          user.status === 'active'
-            ? 'bg-green-100 text-green-800'
-            : 'bg-gray-100 text-gray-800'
-        }`}
-      >
-        {user.status}
-      </span>
-    ),
   },
   {
-    key: 'createdAt',
-    label: 'Created',
+    key: "createdAt",
+    label: "Created",
     sortable: true,
-    render: (user) => new Date(user.createdAt).toLocaleDateString(),
   },
-]
+];
+// Column definitions
+const columnsDouble: Column[][] = [
+  [
+    {
+      key: "personal",
+      label: "Personal Information",
+      sortable: false,
+      colSpan: 2,
+    },
+    {
+      key: "account",
+      label: "Account Information",
+      sortable: false,
+    },
+  ],
+  [
+    {
+      key: "name",
+      label: "Name",
+      sortable: true,
+    },
+    {
+      key: "email",
+      label: "Email",
+      sortable: true,
+    },
+    {
+      key: "role",
+      label: "Role",
+      sortable: true,
+    },
+    {
+      key: "status",
+      label: "Status",
+      sortable: true,
+    },
+    {
+      key: "createdAt",
+      label: "Created",
+      sortable: true,
+    },
+  ],
+];
+const rows = (users: User[]) =>
+  users.map((user) => (
+    <TableRow key={user.id}>
+      <TableCell>
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          {user.role}
+        </span>
+      </TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell>{user.name}</TableCell>
+      <TableCell>
+        <span
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            user.status === "active"
+              ? "bg-green-100 text-green-800"
+              : "bg-gray-100 text-gray-800"
+          }`}
+        >
+          {user.status}
+        </span>
+      </TableCell>
+      <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+    </TableRow>
+  ));
 
 // Create a new QueryClient for each story to avoid cache issues
 const createQueryClient = () =>
@@ -155,86 +200,105 @@ const createQueryClient = () =>
         retry: false,
       },
     },
-  })
+  });
 
 const meta = {
-  title: 'Components/Datatable',
-  component: Datatable,
+  title: "Components/DataTable",
+  component: DataTable<User>,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Server-side data table with pagination, sorting, and search powered by React Query. Requires @tanstack/react-query to be installed.',
+          "Server-side data table with pagination, sorting, and search powered by React Query. Requires @tanstack/react-query to be installed.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     (Story) => {
-      const queryClient = createQueryClient()
+      const queryClient = createQueryClient();
       return (
         <QueryClientProvider client={queryClient}>
           <div className="max-w-7xl">
             <Story />
           </div>
         </QueryClientProvider>
-      )
+      );
     },
   ],
-} satisfies Meta<typeof Datatable>
+} satisfies Meta<typeof DataTable<User>>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     fetchAction: mockFetchUsers,
     columns,
-    queryKey: 'users-default',
-    searchPlaceholder: 'Search users...',
-    defaultSortBy: 'name',
-    defaultSortOrder: 'asc',
+    queryKey: "users-default",
+    searchPlaceholder: "Search users...",
+    defaultSortBy: "name",
+    defaultSortOrder: "asc",
+    rows,
   },
-}
+};
 
 export const SortedByDate: Story = {
   args: {
     fetchAction: mockFetchUsers,
     columns,
-    queryKey: 'users-sorted',
-    searchPlaceholder: 'Search users...',
-    defaultSortBy: 'createdAt',
-    defaultSortOrder: 'desc',
+    queryKey: "users-sorted",
+    searchPlaceholder: "Search users...",
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    rows,
   },
-}
+};
 
 export const EmptyState: Story = {
   args: {
     fetchAction: mockFetchUsersEmpty,
     columns,
-    queryKey: 'users-empty',
-    searchPlaceholder: 'Search users...',
+    queryKey: "users-empty",
+    searchPlaceholder: "Search users...",
+    rows,
   },
-}
-
+};
+export const DoubleColumnState: Story = {
+  args: {
+    fetchAction: mockFetchUsers,
+    columns: columnsDouble,
+    queryKey: "users-double",
+    searchPlaceholder: "Search users...",
+    rows,
+  },
+};
 export const CustomSearchPlaceholder: Story = {
   args: {
     fetchAction: mockFetchUsers,
     columns,
-    queryKey: 'users-custom-search',
-    searchPlaceholder: 'Cari pengguna berdasarkan nama, email, atau role...',
+    queryKey: "users-custom-search",
+    searchPlaceholder: "Cari pengguna berdasarkan nama, email, atau role...",
+    rows,
   },
-}
+};
 
 export const WithRefInvalidate: Story = {
+  args: {
+    fetchAction: mockFetchUsers,
+    columns,
+    queryKey: "users-with-ref",
+    searchPlaceholder: "Search users...",
+    rows,
+  },
   render: () => {
-    const queryClient = createQueryClient()
-    const tableRef = useRef<any>(null)
+    const queryClient = createQueryClient();
+    const tableRef = useRef<any>(null);
 
     const handleRefresh = () => {
-      tableRef.current?.invalidate()
-    }
+      tableRef.current?.invalidate();
+    };
 
     return (
       <QueryClientProvider client={queryClient}>
@@ -248,119 +312,57 @@ export const WithRefInvalidate: Story = {
               Refresh Table
             </button>
           </div>
-          <Datatable
+          <DataTable
             ref={tableRef}
             fetchAction={mockFetchUsers}
             columns={columns}
             queryKey="users-with-ref"
             searchPlaceholder="Search users..."
+            rows={rows}
           />
         </div>
       </QueryClientProvider>
-    )
+    );
   },
-}
+};
 
 export const MinimalColumns: Story = {
   args: {
     fetchAction: mockFetchUsers,
     columns: [
       {
-        key: 'name',
-        label: 'Name',
+        key: "name",
+        label: "Name",
         sortable: true,
       },
       {
-        key: 'email',
-        label: 'Email',
+        key: "email",
+        label: "Email",
         sortable: true,
       },
     ],
-    queryKey: 'users-minimal',
-    searchPlaceholder: 'Search...',
+    queryKey: "users-minimal",
+    searchPlaceholder: "Search...",
+    rows,
   },
-}
+};
 
 export const ManyColumns: Story = {
   args: {
     fetchAction: mockFetchUsers,
     columns: [
       {
-        key: 'id',
-        label: 'ID',
+        key: "id",
+        label: "ID",
         sortable: true,
       },
       ...columns,
     ],
-    queryKey: 'users-many-columns',
-    searchPlaceholder: 'Search users...',
+    queryKey: "users-many-columns",
+    searchPlaceholder: "Search users...",
+    rows,
   },
-}
-
-export const CustomRendering: Story = {
-  args: {
-    fetchAction: mockFetchUsers,
-    columns: [
-      {
-        key: 'name',
-        label: 'User',
-        sortable: true,
-        render: (user) => (
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold text-sm">
-              {user.name.charAt(0)}
-            </div>
-            <div>
-              <div className="font-medium">{user.name}</div>
-              <div className="text-sm text-gray-500">{user.email}</div>
-            </div>
-          </div>
-        ),
-      },
-      {
-        key: 'role',
-        label: 'Role',
-        sortable: true,
-        render: (user) => (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            {user.role}
-          </span>
-        ),
-      },
-      {
-        key: 'status',
-        label: 'Status',
-        sortable: true,
-        render: (user) => (
-          <div className="flex items-center gap-2">
-            <span
-              className={`h-2 w-2 rounded-full ${
-                user.status === 'active' ? 'bg-green-500' : 'bg-gray-300'
-              }`}
-            />
-            <span className="text-sm capitalize">{user.status}</span>
-          </div>
-        ),
-      },
-      {
-        key: 'createdAt',
-        label: 'Joined',
-        sortable: true,
-        render: (user) => (
-          <div className="text-sm text-gray-600">
-            {new Date(user.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })}
-          </div>
-        ),
-      },
-    ],
-    queryKey: 'users-custom-render',
-    searchPlaceholder: 'Search users...',
-  },
-}
+};
 
 // Note: Error state story removed as it causes issues in Storybook
 // To test error state, you can modify the fetchAction to throw an error
