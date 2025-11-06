@@ -1,9 +1,13 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-import path from 'path'
-import { fileURLToPath } from 'url'
+import path from "path";
+import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+// Helper function to resolve paths relative
+// SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook\main.ts file.
+const resolvePath = (relativePath: string) => {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  return path.resolve(currentDir, relativePath);
+};
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -24,19 +28,19 @@ const config: StorybookConfig = {
         ...config.resolve,
         alias: {
           ...config.resolve?.alias,
-          '@/components/ui/table': path.resolve(__dirname, 'mocks/ui/table.tsx'),
-          '@/components/ui/button': path.resolve(__dirname, 'mocks/ui/button.tsx'),
-          '@/components/ui/input': path.resolve(__dirname, 'mocks/ui/input.tsx'),
-          '@/components/ui/select': path.resolve(__dirname, 'mocks/ui/select.tsx'),
-          '@/components': path.resolve(__dirname, '../src/components'),
-          '@/hooks': path.resolve(__dirname, '../src/hooks'),
-          '@/utils': path.resolve(__dirname, '../src/utils'),
-          '@/types': path.resolve(__dirname, '../src/types'),
-          '@/styles': path.resolve(__dirname, '../src/styles'),
-          '@': path.resolve(__dirname, '../src'),
+          "@/components/ui/table": resolvePath("mocks/ui/table.tsx"),
+          "@/components/ui/button": resolvePath("mocks/ui/button.tsx"),
+          "@/components/ui/input": resolvePath("mocks/ui/input.tsx"),
+          "@/components/ui/select": resolvePath("mocks/ui/select.tsx"),
+          "@/components": resolvePath("../src/components"),
+          "@/hooks": resolvePath("../src/hooks"),
+          "@/utils": resolvePath("../src/utils"),
+          "@/types": resolvePath("../src/types"),
+          "@/styles": resolvePath("../src/styles"),
+          "@": resolvePath("../src"),
         },
       },
-    }
+    };
   },
 };
 export default config;
