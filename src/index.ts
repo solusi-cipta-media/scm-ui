@@ -1,6 +1,6 @@
 // Components
 export { Button } from "./components/Button/Button";
-export { DataTable } from "./components/DataTable/DataTable";
+export { DataTable } from "./components/DataTable/Datatable";
 export { AutoComplete } from "./components/AutoComplete/AutoComplete";
 export { RemoteAutoComplete } from "./components/RemoteAutoComplete/RemoteAutoComplete";
 
@@ -12,7 +12,7 @@ export { cn } from "./utils/cn";
 
 // Types
 export type { ButtonProps } from "./components/Button/Button";
-export type { Column, DataTableRef } from "./components/DataTable/DataTable";
+export type { Column, DataTableRef } from "./components/DataTable/Datatable";
 export type {
   AutoCompleteOption,
   AutoCompleteProps,

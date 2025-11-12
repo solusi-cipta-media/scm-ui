@@ -146,25 +146,29 @@ const columnsWithClassName: Column[] = [
     key: "email",
     label: "Email",
     sortable: true,
-    className: "min-w-[250px] bg-green-50 text-green-900 border-2 border-green-300",
+    className:
+      "min-w-[250px] bg-green-50 text-green-900 border-2 border-green-300",
   },
   {
     key: "role",
     label: "Role",
     sortable: true,
-    className: "text-center w-[120px] bg-purple-50 text-purple-900 border-2 border-purple-300",
+    className:
+      "text-center w-[120px] bg-purple-50 text-purple-900 border-2 border-purple-300",
   },
   {
     key: "status",
     label: "Status",
     sortable: true,
-    className: "text-center w-[100px] bg-yellow-50 text-yellow-900 border-2 border-yellow-300",
+    className:
+      "text-center w-[100px] bg-yellow-50 text-yellow-900 border-2 border-yellow-300",
   },
   {
     key: "createdAt",
     label: "Created",
     sortable: true,
-    className: "text-right w-[150px] bg-red-50 text-red-900 border-2 border-red-300",
+    className:
+      "text-right w-[150px] bg-red-50 text-red-900 border-2 border-red-300",
   },
 ];
 // Column definitions
