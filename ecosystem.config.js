@@ -8,7 +8,7 @@ module.exports = {
   apps: [
     {
       name: 'scm-ui',
-      script: `npm run storybook -- -p ${port} --host ${host}`,
+      script: `npm run storybook -- -p ${port} --host 0.0.0.0`,
       error_file: 'log/error.log',
       out_file: 'log/out.log',
       args: ``,
