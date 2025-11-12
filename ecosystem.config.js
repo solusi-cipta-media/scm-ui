@@ -2,15 +2,16 @@
 require('dotenv').config();
 
 const port = process.env.PM2_PORT;
+const host = process.env.HOST;
 
 module.exports = {
   apps: [
     {
       name: 'scm-ui',
-      script: `npm run storybook -- -p ${port}`,
+      script: `npm run storybook`,
       error_file: 'log/error.log',
       out_file: 'log/out.log',
-      args: '',
+      args: `-- -p ${port} --host ${host}`,
       node_args: '--tls-min-v1.0',
       instances: 1,
       autorestart: true,

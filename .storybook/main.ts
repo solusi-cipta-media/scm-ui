@@ -24,6 +24,10 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     return {
       ...config,
+      server: {
+        ...config.server,
+        allowedHosts: [process.env.HOST ?? "localhost"],
+      },
       resolve: {
         ...config.resolve,
         alias: {
