@@ -47,6 +47,7 @@ export interface Column {
   label: string;
   sortable?: boolean;
   colSpan?: number;
+  className?: string;
 }
 
 // Memoized search controls to prevent re-render when parent re-renders
@@ -301,7 +302,7 @@ function DataTableComponent<T extends Record<string, any>>(
             {headers.map((headerGroup, groupIndex) => (
               <TableRow key={groupIndex}>
                 {headerGroup.map((column) => (
-                  <TableHead key={column.key} colSpan={column.colSpan}>
+                  <TableHead key={column.key} colSpan={column.colSpan} className={column.className}>
                     {column.sortable ? (
                       <button
                         onClick={() => handleSortChange(column.key)}

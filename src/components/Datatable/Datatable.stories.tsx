@@ -102,26 +102,69 @@ const columns: Column[] = [
     key: "name",
     label: "Name",
     sortable: true,
+    colSpan: undefined,
+    className: undefined,
   },
   {
     key: "email",
     label: "Email",
     sortable: true,
+    colSpan: undefined,
+    className: undefined,
   },
   {
     key: "role",
     label: "Role",
     sortable: true,
+    colSpan: undefined,
+    className: undefined,
   },
   {
     key: "status",
     label: "Status",
     sortable: true,
+    colSpan: undefined,
+    className: undefined,
   },
   {
     key: "createdAt",
     label: "Created",
     sortable: true,
+    colSpan: undefined,
+    className: undefined,
+  },
+];
+// Column definitions with custom styling
+const columnsWithClassName: Column[] = [
+  {
+    key: "name",
+    label: "Name",
+    sortable: true,
+    className: "w-[200px] bg-blue-50 text-blue-900 border-2 border-blue-300",
+  },
+  {
+    key: "email",
+    label: "Email",
+    sortable: true,
+    className: "min-w-[250px] bg-green-50 text-green-900 border-2 border-green-300",
+  },
+  {
+    key: "role",
+    label: "Role",
+    sortable: true,
+    className: "text-center w-[120px] bg-purple-50 text-purple-900 border-2 border-purple-300",
+  },
+  {
+    key: "status",
+    label: "Status",
+    sortable: true,
+    className: "text-center w-[100px] bg-yellow-50 text-yellow-900 border-2 border-yellow-300",
+  },
+  {
+    key: "createdAt",
+    label: "Created",
+    sortable: true,
+    className: "text-right w-[150px] bg-red-50 text-red-900 border-2 border-red-300",
   },
 ];
 // Column definitions
@@ -415,6 +458,24 @@ export const MobileView: Story = {
       );
     },
   ],
+};
+
+export const CustomColumnStyling: Story = {
+  args: {
+    fetchAction: mockFetchUsers,
+    columns: columnsWithClassName,
+    queryKey: "users-custom-styling",
+    searchPlaceholder: "Search users...",
+    rows,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates custom column styling using className property. Each column can have custom width, alignment, background colors, and text colors. In this example: Name (blue bg, 200px width), Email (green bg, min-width 250px), Role (purple bg, centered, 120px), Status (yellow bg, centered, 100px), and Created date (red bg, right-aligned, 150px). You can use any Tailwind classes for styling columns.",
+      },
+    },
+  },
 };
 
 // Note: Error state story removed as it causes issues in Storybook
