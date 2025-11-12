@@ -8,10 +8,10 @@ module.exports = {
   apps: [
     {
       name: 'scm-ui',
-      script: `npm run storybook`,
+      script: `npm run storybook -- -p ${port} --host ${host}`,
       error_file: 'log/error.log',
       out_file: 'log/out.log',
-      args: `-- -p ${port} --host ${host}`,
+      args: ``,
       node_args: '--tls-min-v1.0',
       instances: 1,
       autorestart: true,
