@@ -33,6 +33,7 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
@@ -57,6 +58,7 @@ interface SearchControlsProps {
   searchPlaceholder: string;
   isLoading: boolean;
   isFetching: boolean;
+  pageSizeOptions: number[];
 }
 
 const SearchControls = memo(
@@ -68,10 +70,11 @@ const SearchControls = memo(
     searchPlaceholder,
     isLoading,
     isFetching,
+    pageSizeOptions,
   }: SearchControlsProps) => {
     return (
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex-1 max-w-sm">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex-1 w-full sm:max-w-sm">
           <div className="relative">
             <Search
               className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 ${
@@ -92,16 +95,19 @@ const SearchControls = memo(
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-center sm:justify-start">
           <span className="text-sm text-gray-600">Tampilkan</span>
           <Select value={String(pageSize)} onValueChange={onPageSizeChange}>
-            <SelectTrigger className="w-[100px]">
-              <SelectValue />
+            <SelectTrigger className="w-[70px]">
+              <SelectValue placeholder={String(pageSize)} />
+              <ChevronDown className="h-4 w-4 opacity-50" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
+              {pageSizeOptions.map((option) => (
+                <SelectItem key={option} value={String(option)}>
+                  {option}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <span className="text-sm text-gray-600">data</span>
@@ -127,6 +133,7 @@ export interface DataTableProps<T> {
   searchPlaceholder?: string;
   defaultSortBy?: string;
   defaultSortOrder?: "asc" | "desc";
+  pageSizeOptions?: number[];
 }
 
 export interface DataTableRef {
@@ -142,6 +149,7 @@ function DataTableComponent<T extends Record<string, any>>(
     searchPlaceholder = "Cari...",
     defaultSortBy = "createdAt",
     defaultSortOrder = "desc",
+    pageSizeOptions = [10, 25, 50],
   }: DataTableProps<T>,
   ref: React.Ref<DataTableRef>
 ) {
@@ -149,7 +157,7 @@ function DataTableComponent<T extends Record<string, any>>(
 
   // State management
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(pageSizeOptions[0]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<string>(defaultSortBy);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);
@@ -235,7 +243,7 @@ function DataTableComponent<T extends Record<string, any>>(
   // Generate page numbers for pagination
   const generatePageNumbers = () => {
     const pages: (number | string)[] = [];
-    const maxVisible = 7;
+    const maxVisible = 5; // Reduced for better mobile experience
 
     if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) {
@@ -244,21 +252,19 @@ function DataTableComponent<T extends Record<string, any>>(
     } else {
       pages.push(1);
 
-      if (currentPage <= 3) {
-        for (let i = 2; i <= Math.min(5, totalPages - 1); i++) {
+      if (currentPage <= 2) {
+        for (let i = 2; i <= Math.min(3, totalPages - 1); i++) {
           pages.push(i);
         }
         pages.push("ellipsis-end");
-      } else if (currentPage >= totalPages - 2) {
+      } else if (currentPage >= totalPages - 1) {
         pages.push("ellipsis-start");
-        for (let i = Math.max(2, totalPages - 4); i <= totalPages - 1; i++) {
+        for (let i = Math.max(2, totalPages - 2); i <= totalPages - 1; i++) {
           pages.push(i);
         }
       } else {
         pages.push("ellipsis-start");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
+        pages.push(currentPage);
         pages.push("ellipsis-end");
       }
 
@@ -275,7 +281,7 @@ function DataTableComponent<T extends Record<string, any>>(
   const endRow = Math.min(currentPage * pageSize, totalRows);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Search and Page Size Controls */}
       <SearchControls
         searchQuery={searchQuery}
@@ -285,10 +291,11 @@ function DataTableComponent<T extends Record<string, any>>(
         searchPlaceholder={searchPlaceholder}
         isLoading={isLoading}
         isFetching={isFetching}
+        pageSizeOptions={pageSizeOptions}
       />
 
       {/* Table */}
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border bg-white overflow-x-auto">
         <Table>
           <TableHeader>
             {headers.map((headerGroup, groupIndex) => (
@@ -356,8 +363,8 @@ function DataTableComponent<T extends Record<string, any>>(
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-600">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+        <div className="text-sm text-gray-600 text-center sm:text-left">
           Menampilkan {tableData.length > 0 ? startRow : 0} sampai {endRow} dari{" "}
           {totalRows} data
         </div>
@@ -368,7 +375,7 @@ function DataTableComponent<T extends Record<string, any>>(
             size="icon"
             onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1 || isLoading || isFetching}
-            className="h-9 w-9"
+            className="h-10 w-10 sm:h-9 sm:w-9"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -379,7 +386,7 @@ function DataTableComponent<T extends Record<string, any>>(
               return (
                 <div
                   key={`ellipsis-${index}`}
-                  className="flex items-center justify-center h-9 w-9 text-gray-400"
+                  className="flex items-center justify-center h-10 w-6 sm:h-9 sm:w-9 text-gray-400"
                 >
                   ...
                 </div>
@@ -394,7 +401,7 @@ function DataTableComponent<T extends Record<string, any>>(
                 size="icon"
                 onClick={() => handlePageChange(pageNum)}
                 disabled={isLoading || isFetching}
-                className={`h-9 w-9 ${
+                className={`h-10 w-10 sm:h-9 sm:w-9 ${
                   isActive
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "hover:bg-gray-100"
@@ -418,7 +425,7 @@ function DataTableComponent<T extends Record<string, any>>(
               isLoading ||
               isFetching
             }
-            className="h-9 w-9"
+            className="h-10 w-10 sm:h-9 sm:w-9"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>

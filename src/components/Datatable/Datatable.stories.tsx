@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRef } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Column, DataTable } from "./DataTable";
+import { Column, DataTable } from "./Datatable";
 
 // Mock data types
 interface User {
@@ -137,6 +137,7 @@ const columnsDouble: Column[][] = [
       key: "account",
       label: "Account Information",
       sortable: false,
+      colSpan: 3,
     },
   ],
   [
@@ -170,13 +171,13 @@ const columnsDouble: Column[][] = [
 const rows = (users: User[]) =>
   users.map((user) => (
     <TableRow key={user.id}>
+      <TableCell>{user.name}</TableCell>
+      <TableCell>{user.email}</TableCell>
       <TableCell>
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
           {user.role}
         </span>
       </TableCell>
-      <TableCell>{user.email}</TableCell>
-      <TableCell>{user.name}</TableCell>
       <TableCell>
         <span
           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -210,7 +211,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Server-side data table with pagination, sorting, and search powered by React Query. Requires @tanstack/react-query to be installed.",
+          "Fully responsive server-side data table with pagination, sorting, and search powered by React Query. Features mobile-optimized layout with touch-friendly controls, horizontal scrolling for wide tables, and adaptive spacing. Requires @tanstack/react-query to be installed.",
       },
     },
   },
@@ -362,6 +363,58 @@ export const ManyColumns: Story = {
     searchPlaceholder: "Search users...",
     rows,
   },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Table with many columns demonstrates horizontal scrolling on mobile and narrow viewports. The table becomes scrollable horizontally to accommodate all columns.",
+      },
+    },
+  },
+};
+
+export const CustomPageSizeOptions: Story = {
+  args: {
+    fetchAction: mockFetchUsers,
+    columns,
+    queryKey: "users-custom-page-size",
+    searchPlaceholder: "Search users...",
+    pageSizeOptions: [5, 15, 30, 100],
+    rows,
+  },
+};
+
+export const MobileView: Story = {
+  args: {
+    fetchAction: mockFetchUsers,
+    columns,
+    queryKey: "users-mobile",
+    searchPlaceholder: "Search users...",
+    rows,
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile1",
+    },
+    docs: {
+      description: {
+        story:
+          "Mobile-optimized view with vertical stacking of controls, touch-friendly button sizes (40x40px), and responsive pagination with reduced page numbers for better mobile experience.",
+      },
+    },
+  },
+  decorators: [
+    (Story) => {
+      const queryClient = createQueryClient();
+      return (
+        <QueryClientProvider client={queryClient}>
+          <div className="max-w-sm mx-auto">
+            <Story />
+          </div>
+        </QueryClientProvider>
+      );
+    },
+  ],
 };
 
 // Note: Error state story removed as it causes issues in Storybook
