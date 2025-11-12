@@ -29,7 +29,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev",
     "build-storybook": "storybook build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit"
@@ -72,13 +72,14 @@
     "tailwindcss": "^3.4.17",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "dotenv": "^17.2.3"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.1.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
-    "@radix-ui/react-popover": "^1.1.15",
     "tailwind-merge": "^2.6.0"
   },
   "keywords": [
