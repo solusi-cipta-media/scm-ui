@@ -37,21 +37,15 @@ module.exports = {
 }
 ```
 
-### 2. Peer Dependencies
+### 2. shadcn/ui Components
 
-Install required dependencies:
-
-```bash
-npm install @tanstack/react-query lucide-react
-```
-
-### 3. shadcn/ui Components (untuk DataTable)
-
-DataTable component memerlukan shadcn/ui components. Install di project Anda:
+DataTable & AutoComplete components memerlukan shadcn/ui components. Install di project Anda:
 
 ```bash
 npx shadcn@latest add table button input select
 ```
+
+**Note:** Semua dependencies lain (termasuk `@tanstack/react-query`, `lucide-react`, dll) akan otomatis terinstall.
 
 ## Quick Start
 

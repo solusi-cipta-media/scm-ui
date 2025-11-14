@@ -14,7 +14,6 @@ export default defineConfig({
     'react',
     'react-dom',
     'next',
-    '@tanstack/react-query',
     // Mark UI components as external (to be provided by consuming project)
     '@/components/ui/table',
     '@/components/ui/button',
