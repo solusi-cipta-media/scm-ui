@@ -14,11 +14,6 @@ export default defineConfig({
     'react',
     'react-dom',
     'next',
-    // Mark UI components as external (to be provided by consuming project)
-    '@/components/ui/table',
-    '@/components/ui/button',
-    '@/components/ui/input',
-    '@/components/ui/select',
   ],
   treeshake: true,
   minify: false,

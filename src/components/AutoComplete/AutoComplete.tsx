@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 
-import { Input } from "@/components/ui/input";
+import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/Popover";
 import { cn } from "../../utils/cn";
 

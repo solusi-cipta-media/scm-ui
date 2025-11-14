@@ -37,15 +37,7 @@ module.exports = {
 }
 ```
 
-### 2. shadcn/ui Components
-
-DataTable & AutoComplete components memerlukan shadcn/ui components. Install di project Anda:
-
-```bash
-npx shadcn@latest add table button input select
-```
-
-**Note:** Semua dependencies lain (termasuk `@tanstack/react-query`, `lucide-react`, dll) akan otomatis terinstall.
+**Note:** Semua dependencies termasuk UI components (table, button, input, select) sudah termasuk dalam package. Anda tidak perlu install shadcn/ui atau dependencies lainnya secara terpisah.
 
 ## Quick Start
 

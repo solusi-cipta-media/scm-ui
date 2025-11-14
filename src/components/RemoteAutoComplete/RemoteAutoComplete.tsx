@@ -51,7 +51,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Check, ChevronDown, X } from "lucide-react";
 
-import { Input } from "@/components/ui/input";
+import { Input } from "../ui/input";
 import { useDebounce } from "../../hooks/use-debounce";
 import { PopoverTrigger, Popover, PopoverContent } from "../Popover/Popover";
 import { cn } from "../../utils/cn";

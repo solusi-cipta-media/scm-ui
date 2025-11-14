@@ -20,16 +20,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "../ui/table";
+import { Button as ShadcnButton } from "../ui/button";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../ui/select";
 import {
   ChevronLeft,
   ChevronRight,
@@ -371,7 +371,7 @@ function DataTableComponent<T extends Record<string, any>>(
         </div>
         <div className="flex items-center gap-1">
           {/* Previous Button */}
-          <Button
+          <ShadcnButton
             variant="outline"
             size="icon"
             onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
@@ -379,7 +379,7 @@ function DataTableComponent<T extends Record<string, any>>(
             className="h-10 w-10 sm:h-9 sm:w-9"
           >
             <ChevronLeft className="h-4 w-4" />
-          </Button>
+          </ShadcnButton>
 
           {/* Page Numbers */}
           {pageNumbers.map((pageNum, index) => {
@@ -396,7 +396,7 @@ function DataTableComponent<T extends Record<string, any>>(
 
             const isActive = pageNum === currentPage;
             return (
-              <Button
+              <ShadcnButton
                 key={pageNum}
                 variant={isActive ? "default" : "outline"}
                 size="icon"
@@ -409,12 +409,12 @@ function DataTableComponent<T extends Record<string, any>>(
                 }`}
               >
                 {pageNum}
-              </Button>
+              </ShadcnButton>
             );
           })}
 
           {/* Next Button */}
-          <Button
+          <ShadcnButton
             variant="outline"
             size="icon"
             onClick={() =>
@@ -429,7 +429,7 @@ function DataTableComponent<T extends Record<string, any>>(
             className="h-10 w-10 sm:h-9 sm:w-9"
           >
             <ChevronRight className="h-4 w-4" />
-          </Button>
+          </ShadcnButton>
         </div>
       </div>
     </div>
