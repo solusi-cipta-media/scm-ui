@@ -5,7 +5,7 @@ import { Check, ChevronDown, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/Popover";
-import { cn } from "@/utils/cn";
+import { cn } from "../../utils/cn";
 
 export interface AutoCompleteOption {
   value: string;

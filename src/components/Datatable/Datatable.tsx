@@ -39,8 +39,8 @@ import {
   ArrowDown,
   Search,
 } from "lucide-react";
-import { useDebounce } from "@/hooks/use-debounce";
-import { FetchResult } from "@/types/pagination-result";
+import { useDebounce } from "../../hooks/use-debounce";
+import { FetchResult } from "../../types/pagination-result";
 
 export interface Column {
   key: string;

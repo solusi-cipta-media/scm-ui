@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RemoteAutoComplete } from "./RemoteAutoComplete";
-import { FetchResult } from "@/types/pagination-result";
+import { FetchResult } from "../../types/pagination-result";
 
 // Export the option interface for proper typing
 

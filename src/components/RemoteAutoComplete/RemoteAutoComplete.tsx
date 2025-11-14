@@ -52,10 +52,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Check, ChevronDown, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounce } from "../../hooks/use-debounce";
 import { PopoverTrigger, Popover, PopoverContent } from "../Popover/Popover";
-import { cn } from "@/utils/cn";
-import { FetchResult } from "@/types/pagination-result";
+import { cn } from "../../utils/cn";
+import { FetchResult } from "../../types/pagination-result";
 
 export interface RemoteAutoCompleteOption {
   value: string;
