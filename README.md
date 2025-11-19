@@ -89,6 +89,10 @@ npx shadcn@latest init
 
 ### 1. Update Tailwind Content Path
 
+> **Note:** Tailwind v4 mendukung 2 cara konfigurasi. File `tailwind.config.js` bersifat **optional**. Pilih salah satu sesuai setup project Anda:
+
+#### Opsi A: Jika Punya `tailwind.config.js` (JS-Based Config)
+
 Tambahkan scm-ui path ke **existing** `tailwind.config.js`:
 
 ```js
@@ -101,6 +105,27 @@ module.exports = {
   // ... rest of your existing config (theme, plugins, etc)
 }
 ```
+
+#### Opsi B: Jika Pakai CSS-Only Config (Tanpa tailwind.config.js)
+
+Tambahkan `@source` directive di file CSS Anda (biasanya `app/globals.css` atau `src/styles/globals.css`):
+
+```css
+@import 'tailwindcss';
+
+/* Add scm-ui source path */
+@source "../node_modules/scm-ui/dist/**/*.{js,mjs}";
+
+/* Your existing @source paths (if any) */
+@source "../src/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../app/**/*.{js,ts,jsx,tsx,mdx}";
+
+@theme {
+  /* your theme config */
+}
+```
+
+**Catatan:** Path relatif di `@source` dimulai dari lokasi file CSS. Sesuaikan `../` sesuai struktur project Anda.
 
 ### 2. Restart Development Server
 
@@ -131,7 +156,11 @@ Jika perlu import, tambahkan di `app/globals.css`:
 
 **Note:** `scm-ui/styles` berisi default @theme configuration. Jika Anda sudah punya @theme customization sendiri, **skip import ini**.
 
-### 2. Configure Tailwind
+### 2. Configure Tailwind Content Path
+
+> **Tailwind v4 mendukung 2 cara konfigurasi.** Pilih salah satu pendekatan:
+
+#### Pendekatan 1: JS-Based Config (Recommended untuk Compatibility)
 
 Buat/update `tailwind.config.js`:
 
@@ -167,6 +196,49 @@ module.exports = {
   },
 }
 ```
+
+**Keuntungan pendekatan ini:**
+- Compatible dengan tools yang expect `tailwind.config.js` (seperti beberapa IDE plugins)
+- Familiar untuk developers yang sudah pakai Tailwind v3
+- Lebih mudah untuk share config dengan team
+
+#### Pendekatan 2: CSS-Based Config (Pure Tailwind v4)
+
+Jika Anda prefer **tidak** menggunakan `tailwind.config.js`, configure semuanya di CSS (`app/globals.css` atau `src/styles/globals.css`):
+
+```css
+@import 'tailwindcss';
+
+/* Define content sources */
+@source "../src/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../app/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../pages/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../components/**/*.{js,ts,jsx,tsx,mdx}";
+/* WAJIB: Scan scm-ui components */
+@source "../node_modules/scm-ui/dist/**/*.{js,mjs}";
+
+@theme {
+  /* Customize theme sesuai brand Anda */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+}
+```
+
+**Keuntungan pendekatan ini:**
+- Pure CSS, tidak perlu file JS config
+- Sesuai dengan philosophy Tailwind v4 (CSS-first)
+- Satu file untuk semua config
+
+**Catatan:** Jika pakai CSS-based config, Anda **tidak perlu** `tailwind.config.js` sama sekali. Skip ke step berikutnya.
 
 ### 3. Configure PostCSS
 
