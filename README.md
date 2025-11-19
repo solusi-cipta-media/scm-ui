@@ -271,6 +271,116 @@ Pastikan `tsconfig.json` include path alias:
 
 ---
 
+## 🎨 Theme Customization
+
+### Semantic Color Tokens
+
+scm-ui menggunakan **semantic color tokens** yang memungkinkan Anda customize theme dengan mudah. Components akan otomatis mengikuti theme yang Anda define.
+
+#### Default Tokens (Fallback Values)
+
+scm-ui menyediakan default values untuk semua tokens. Jika consumer tidak override, akan menggunakan values ini:
+
+```css
+--color-background: #ffffff;
+--color-foreground: #09090b;
+--color-muted: #f4f4f5;
+--color-muted-foreground: #71717a;
+--color-border: #e4e4e7;
+--color-input: #e4e4e7;
+--color-ring: #3b82f6;
+--color-primary: #3b82f6;
+--color-primary-foreground: #ffffff;
+--color-secondary: #f4f4f5;
+--color-secondary-foreground: #18181b;
+--color-destructive: #ef4444;
+--color-destructive-foreground: #ffffff;
+--color-accent: #f4f4f5;
+--color-accent-foreground: #18181b;
+--color-popover: #ffffff;
+--color-popover-foreground: #09090b;
+```
+
+#### How to Customize Theme
+
+Anda bisa override semantic tokens di `globals.css` project Anda:
+
+**Contoh 1: Simple Override (Hex Colors)**
+
+```css
+@import 'tailwindcss';
+@import 'scm-ui/styles';
+
+@theme inline {
+  --color-primary: #2563eb;
+  --color-primary-foreground: #ffffff;
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+}
+```
+
+**Contoh 2: Advanced Theme (OKLCH Colors)**
+
+```css
+@import 'tailwindcss';
+@import 'scm-ui/styles';
+
+@source "../node_modules/scm-ui/dist/**/*.{js,mjs}";
+
+@theme inline {
+  --color-primary: oklch(0.205 0 0);           /* dark/black */
+  --color-primary-foreground: oklch(1 0 0);    /* white */
+  --color-muted: oklch(0.97 0 0);              /* light gray */
+  --color-muted-foreground: oklch(0.565 0 0);  /* medium gray */
+  --color-border: oklch(0.922 0 0);            /* border gray */
+  --color-accent: oklch(0.97 0 0);             /* accent background */
+  --color-accent-foreground: oklch(0.205 0 0); /* accent text */
+}
+```
+
+**Contoh 3: Dark Mode Support**
+
+```css
+:root {
+  --primary: oklch(0.5 0.2 250);  /* light mode */
+}
+
+.dark {
+  --primary: oklch(0.7 0.15 250); /* dark mode */
+}
+```
+
+#### Token Usage in Components
+
+Semua scm-ui components menggunakan semantic tokens:
+
+- **DataTable**: `text-muted-foreground`, `bg-muted`, `border-border`, `text-foreground`
+- **Button**: `bg-primary`, `text-primary-foreground`, `bg-accent`, `bg-destructive`
+- **Input**: `border-input`, `placeholder:text-muted-foreground`, `focus:ring-ring`
+- **Select**: `border-input`, `bg-popover`, `hover:bg-accent`
+
+#### Benefits of Semantic Tokens
+
+1. **Consistent Theming**: Override tokens sekali, apply ke semua components
+2. **Flexible**: Support hex, rgb, hsl, oklch color formats
+3. **Dark Mode Ready**: Easy to implement dark mode dengan CSS variables
+4. **Brand Alignment**: Components otomatis match dengan brand colors Anda
+5. **Future-Proof**: New components akan otomatis use theme Anda
+
+#### Required Tokens
+
+Minimal tokens yang harus defined jika Anda ingin full control:
+
+- `foreground`, `background`
+- `muted-foreground`, `muted`
+- `border`, `input`, `ring`
+- `primary`, `primary-foreground`
+- `accent`, `accent-foreground`
+
+Jika tidak defined, akan fallback ke default values yang sudah provided oleh scm-ui.
+
+---
+
 ## Quick Start
 
 ```tsx
@@ -333,7 +443,20 @@ export default function Page() {
 **Masalah:** DataTable terlihat berbeda dari rest of app, tidak match brand colors.
 
 **Solusi:**
-scm-ui sekarang menggunakan **shadcn components Anda**, jadi customize shadcn button, input, select, dan table components di project Anda. Perubahan akan otomatis ter-apply ke DataTable.
+scm-ui menggunakan **semantic color tokens** yang bisa di-customize. Ada 2 cara:
+
+1. **Override semantic tokens** di `globals.css` Anda:
+   ```css
+   @theme inline {
+     --color-primary: #your-brand-color;
+     --color-muted-foreground: #your-secondary-color;
+     /* ... override tokens lainnya */
+   }
+   ```
+
+2. **Customize shadcn components**: scm-ui menggunakan shadcn components dari project Anda, jadi perubahan pada button, input, select, dan table akan otomatis ter-apply ke DataTable.
+
+Lihat section **Theme Customization** di atas untuk detail lengkap.
 
 ### Tailwind CSS version mismatch
 

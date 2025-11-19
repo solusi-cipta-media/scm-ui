@@ -78,7 +78,7 @@ const SearchControls = memo(
         <div className="flex-1 w-full sm:max-w-sm">
           <div className="relative">
             <Search
-              className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 ${
+              className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50 ${
                 isFetching ? "animate-pulse" : ""
               }`}
             />
@@ -91,13 +91,13 @@ const SearchControls = memo(
             />
             {isFetching && (
               <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <div className="h-4 w-4 border-2 border-gray-300 border-t-primary rounded-full animate-spin" />
+                <div className="h-4 w-4 border-2 border-border border-t-primary rounded-full animate-spin" />
               </div>
             )}
           </div>
         </div>
         <div className="flex items-center gap-2 justify-center sm:justify-start">
-          <span className="text-sm text-gray-600">Tampilkan</span>
+          <span className="text-sm text-muted-foreground">Tampilkan</span>
           <Select value={String(pageSize)} onValueChange={onPageSizeChange}>
             <SelectTrigger className="w-[70px]">
               <SelectValue placeholder={String(pageSize)} />
@@ -111,7 +111,7 @@ const SearchControls = memo(
               ))}
             </SelectContent>
           </Select>
-          <span className="text-sm text-gray-600">data</span>
+          <span className="text-sm text-muted-foreground">data</span>
         </div>
       </div>
     );
@@ -306,7 +306,7 @@ function DataTableComponent<T extends Record<string, any>>(
                     {column.sortable ? (
                       <button
                         onClick={() => handleSortChange(column.key)}
-                        className="flex items-center gap-2 hover:text-gray-900 font-medium disabled:opacity-50"
+                        className="flex items-center gap-2 hover:text-foreground font-medium disabled:opacity-50"
                         disabled={isLoading || isFetching}
                       >
                         {column.label}
@@ -333,7 +333,7 @@ function DataTableComponent<T extends Record<string, any>>(
               <TableRow>
                 <TableCell
                   colSpan={columns.length + 1}
-                  className="h-24 text-center text-gray-500"
+                  className="h-24 text-center text-muted-foreground"
                 >
                   Memuat data...
                 </TableCell>
@@ -342,7 +342,7 @@ function DataTableComponent<T extends Record<string, any>>(
               <TableRow>
                 <TableCell
                   colSpan={columns.length + 1}
-                  className="h-24 text-center text-red-500"
+                  className="h-24 text-center text-destructive"
                 >
                   Terjadi kesalahan memuat data
                 </TableCell>
@@ -351,7 +351,7 @@ function DataTableComponent<T extends Record<string, any>>(
               <TableRow>
                 <TableCell
                   colSpan={columns.length + 1}
-                  className="h-24 text-center text-gray-500"
+                  className="h-24 text-center text-muted-foreground"
                 >
                   Tidak ada data ditemukan
                 </TableCell>
@@ -365,7 +365,7 @@ function DataTableComponent<T extends Record<string, any>>(
 
       {/* Pagination */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-        <div className="text-sm text-gray-600 text-center sm:text-left">
+        <div className="text-sm text-muted-foreground text-center sm:text-left">
           Menampilkan {tableData.length > 0 ? startRow : 0} sampai {endRow} dari{" "}
           {totalRows} data
         </div>
@@ -387,7 +387,7 @@ function DataTableComponent<T extends Record<string, any>>(
               return (
                 <div
                   key={`ellipsis-${index}`}
-                  className="flex items-center justify-center h-10 w-6 sm:h-9 sm:w-9 text-gray-400"
+                  className="flex items-center justify-center h-10 w-6 sm:h-9 sm:w-9 text-muted-foreground/50"
                 >
                   ...
                 </div>
@@ -405,7 +405,7 @@ function DataTableComponent<T extends Record<string, any>>(
                 className={`h-10 w-10 sm:h-9 sm:w-9 ${
                   isActive
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "hover:bg-gray-100"
+                    : "hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
                 {pageNum}

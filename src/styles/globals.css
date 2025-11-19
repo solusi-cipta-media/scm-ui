@@ -1,6 +1,21 @@
 @import 'tailwindcss';
 
+/**
+ * SCM-UI Theme Configuration
+ *
+ * This file defines the default theme for scm-ui components.
+ * Consumers can override these values by defining their own theme in their globals.css:
+ *
+ * Example:
+ * @theme inline {
+ *   --color-primary: oklch(0.205 0 0);
+ *   --color-muted-foreground: oklch(0.565 0 0);
+ *   // ... override other tokens as needed
+ * }
+ */
+
 @theme {
+  /* Primary color palette */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
   --color-primary-200: #bfdbfe;
@@ -13,6 +28,29 @@
   --color-primary-900: #1e3a8a;
   --color-primary-950: #172554;
 
+  /*
+   * Semantic color tokens with fallback values
+   * These tokens are used by scm-ui components and can be overridden by consumers
+   */
+  --color-background: #ffffff;
+  --color-foreground: #09090b;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #3b82f6;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-accent: #f4f4f5;
+  --color-accent-foreground: #18181b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #09090b;
+
+  /* Border radius */
   --radius-lg: 0.5rem;
   --radius-md: 0.375rem;
   --radius-sm: 0.25rem;

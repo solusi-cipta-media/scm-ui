@@ -50,7 +50,7 @@ export const SelectTrigger = React.forwardRef<
     <button
       ref={ref}
       type="button"
-      className={`flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
         className || ""
       }`}
       {...props}
@@ -76,7 +76,7 @@ export const SelectContent = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={`absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg focus:outline-hidden sm:text-sm ${
+      className={`absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-border bg-popover py-1 text-base shadow-lg focus:outline-hidden sm:text-sm ${
         className || ""
       }`}
       {...props}
@@ -104,7 +104,7 @@ export const SelectItem = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={`relative cursor-pointer select-none py-2 px-3 hover:bg-gray-100 ${
+      className={`relative cursor-pointer select-none py-2 px-3 hover:bg-accent hover:text-accent-foreground ${
         className || ""
       }`}
       onClick={() => onValueChange?.(value)}
