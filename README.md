@@ -32,32 +32,34 @@ Install dependencies yang diperlukan oleh scm-ui:
 npm install \
   tailwindcss@^4.0.0 \
   @tanstack/react-query@^5.0.0 \
-  lucide-react@^0.468.0 \
-  @radix-ui/react-icons@^1.3.0 \
-  @radix-ui/react-popover@^1.1.0 \
-  @radix-ui/react-select@^2.2.0 \
-  @radix-ui/react-slot@^1.2.0
+  lucide-react@latest \
+  @radix-ui/react-icons@latest \
+  @radix-ui/react-popover@latest \
+  @radix-ui/react-select@latest \
+  @radix-ui/react-slot@latest
 
 # yarn
 yarn add \
   tailwindcss@^4.0.0 \
   @tanstack/react-query@^5.0.0 \
-  lucide-react@^0.468.0 \
-  @radix-ui/react-icons@^1.3.0 \
-  @radix-ui/react-popover@^1.1.0 \
-  @radix-ui/react-select@^2.2.0 \
-  @radix-ui/react-slot@^1.2.0
+  lucide-react@latest \
+  @radix-ui/react-icons@latest \
+  @radix-ui/react-popover@latest \
+  @radix-ui/react-select@latest \
+  @radix-ui/react-slot@latest
 
 # pnpm
 pnpm add \
   tailwindcss@^4.0.0 \
   @tanstack/react-query@^5.0.0 \
-  lucide-react@^0.468.0 \
-  @radix-ui/react-icons@^1.3.0 \
-  @radix-ui/react-popover@^1.1.0 \
-  @radix-ui/react-select@^2.2.0 \
-  @radix-ui/react-slot@^1.2.0
+  lucide-react@latest \
+  @radix-ui/react-icons@latest \
+  @radix-ui/react-popover@latest \
+  @radix-ui/react-select@latest \
+  @radix-ui/react-slot@latest
 ```
+
+**Note:** Menggunakan `@latest` untuk radix-ui dan lucide-react memastikan compatibility dengan versions terbaru.
 
 **Catatan:** Jika project Anda sudah menggunakan shadcn/ui, kemungkinan besar packages ini sudah terinstall. Anda bisa skip packages yang sudah ada atau check dengan `npm list <package-name>`.
 
