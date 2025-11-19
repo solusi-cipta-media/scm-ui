@@ -10,20 +10,9 @@ Component library untuk Next.js dengan TypeScript dan Tailwind CSS.
 
 ## Installation
 
-### 1. Install scm-ui Package
+> **PENTING:** Peer dependencies harus diinstall **DULU** sebelum scm-ui package!
 
-```bash
-# npm
-npm install github:solusi-cipta-media/scm-ui
-
-# yarn
-yarn add github:solusi-cipta-media/scm-ui
-
-# pnpm
-pnpm add github:solusi-cipta-media/scm-ui
-```
-
-### 2. Install Peer Dependencies
+### 1. Install Peer Dependencies
 
 Install dependencies yang diperlukan oleh scm-ui:
 
@@ -59,9 +48,22 @@ pnpm add \
   @radix-ui/react-slot@latest
 ```
 
-**Note:** Menggunakan `@latest` untuk radix-ui dan lucide-react memastikan compatibility dengan versions terbaru.
-
 **Catatan:** Jika project Anda sudah menggunakan shadcn/ui, kemungkinan besar packages ini sudah terinstall. Anda bisa skip packages yang sudah ada atau check dengan `npm list <package-name>`.
+
+### 2. Install scm-ui Package
+
+Setelah peer dependencies terinstall, install scm-ui:
+
+```bash
+# npm
+npm install github:solusi-cipta-media/scm-ui
+
+# yarn
+yarn add github:solusi-cipta-media/scm-ui
+
+# pnpm
+pnpm add github:solusi-cipta-media/scm-ui
+```
 
 ### 3. Install Required shadcn/ui Components
 
