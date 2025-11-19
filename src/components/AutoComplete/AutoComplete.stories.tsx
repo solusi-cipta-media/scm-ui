@@ -281,7 +281,7 @@ export const Interactive: Story = {
             </div>
 
             <button
-              className="px-3 py-1 bg-blue-500 text-white rounded text-sm"
+              className="px-3 py-1 bg-blue-500 text-white rounded-sm text-sm"
               onClick={() => setValue("")}
             >
               Clear Selection

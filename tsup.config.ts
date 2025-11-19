@@ -3,7 +3,6 @@ import { defineConfig } from 'tsup'
 export default defineConfig({
   entry: {
     index: 'src/index.ts',
-    'tailwind.config': 'src/tailwind.config.ts'
   },
   format: ['cjs', 'esm'],
   dts: true,
@@ -14,11 +13,15 @@ export default defineConfig({
     'react',
     'react-dom',
     'next',
+    '@/components/ui/button',
+    '@/components/ui/input',
+    '@/components/ui/select',
+    '@/components/ui/table',
   ],
   treeshake: true,
   minify: false,
   // Inject CSS into the bundle
   injectStyle: false,
-  // Copy styles to dist
-  onSuccess: 'echo "Build completed successfully"'
+  // Copy globals.css to dist for consumers
+  onSuccess: 'cp src/styles/globals.css dist/globals.css && echo "Build completed successfully"'
 })

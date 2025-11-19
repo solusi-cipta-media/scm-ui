@@ -469,7 +469,7 @@ export const ProductsWithCustomRendering: Story = {
                 {option.subLabel}
               </span>
             </div>
-            <div className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+            <div className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-sm">
               In Stock
             </div>
           </div>
@@ -511,7 +511,7 @@ export const CountriesSmallPageSize: Story = {
         }
         renderOption={(option) => (
           <div className="flex items-center gap-3">
-            <div className="w-8 h-6 bg-gray-200 rounded flex items-center justify-center text-xs font-mono">
+            <div className="w-8 h-6 bg-gray-200 rounded-sm flex items-center justify-center text-xs font-mono">
               {option.subLabel?.split(" - ")[0]}
             </div>
             <div className="flex flex-col">

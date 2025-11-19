@@ -51,7 +51,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Check, ChevronDown, X } from "lucide-react";
 
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { useDebounce } from "../../hooks/use-debounce";
 import { PopoverTrigger, Popover, PopoverContent } from "../Popover/Popover";
 import { cn } from "../../utils/cn";
@@ -311,7 +311,7 @@ export function RemoteAutoComplete<T = any>({
                     e.stopPropagation();
                     handleClear(e);
                   }}
-                  className="p-1 hover:bg-gray-100 rounded z-10"
+                  className="p-1 hover:bg-gray-100 rounded-sm z-10"
                   tabIndex={-1}
                 >
                   <X className="h-4 w-4 opacity-50 hover:opacity-100" />
@@ -324,7 +324,7 @@ export function RemoteAutoComplete<T = any>({
                   e.stopPropagation();
                   setOpen(!open);
                 }}
-                className="p-1 hover:bg-gray-100 rounded"
+                className="p-1 hover:bg-gray-100 rounded-sm"
                 tabIndex={-1}
               >
                 <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
